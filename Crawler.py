@@ -9,18 +9,17 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-'''
-specialite = input("💉 Entrez la spécialité ou type de médecin recherché (ex: généraliste, dentiste, ophtalmo) : ")
-rue = input("entrez la rue et l'adresse (ex: 12 avenue Victor Hugo) : ")
-cp = input("entrez le code postal (ex: 75001) : ")
-ville = input("entrez la ville (ex: Paris) : ")
+
+specialite = input("💉 Entrez la spécialité ou type de médecin recherché (ex: généraliste, dentiste, ophtalmo) : ") or ""
+rue = input("entrez la rue et l'adresse (ex: 12 avenue Victor Hugo) : ") or ""
+cp = input("entrez le code postal (ex: 75001) : ") or ""
+ville = input("entrez la ville (ex: Paris) : ") or ""
 adresse_complete = rue + " " + cp + " " + ville
-'''
 preference = input("Souhaitez-vous uniquement les consultations en visio, en présentiel, ou les deux ? (visio/presentiel/tout) : ").lower().strip() or "tout"
 assurance_pref = input("Souhaitez-vous un médecin conventionné d’un type précis ? (ex: secteur 1, secteur 2, non, tous) : ").lower().strip() or "tous"
 
-specialite = "medecin"
-adresse_complete = "75000"
+#specialite = "medecin"
+#adresse_complete = "75000"
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 driver.get("https://www.doctolib.fr")
