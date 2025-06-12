@@ -16,8 +16,10 @@ cp = input("entrez le code postal (ex: 75001) : ")
 ville = input("entrez la ville (ex: Paris) : ")
 adresse_complete = rue + " " + cp + " " + ville
 '''
-specialite = "medecin"
+preference = input("Souhaitez-vous uniquement les consultations en visio, en présentiel, ou les deux ? (visio/presentiel/tout) : ").lower().strip() or "tout"
+assurance_pref = input("Souhaitez-vous un médecin conventionné d’un type précis ? (ex: secteur 1, secteur 2, non, tous) : ").lower().strip() or "tout"
 
+specialite = "medecin"
 adresse_complete = "75000"
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -116,7 +118,14 @@ for card in cards:
         except:
             visio = "Visio non disponible"
 
-        # Ajout au csv
+        # filtre assurance
+        if assurance_pref != "tous" and assurance_pref not in convention.lower():
+            continue
+        # filtre visio
+        if (preference == "visio" and visio != "Visio disponible") or \
+                (preference == "presentiel" and visio == "Visio disponible"):
+            continue
+
         if nom and spe:
             medecins.append([nom, spe, adresse, convention,visio])
         else:
@@ -140,5 +149,4 @@ with open("medecins.csv", "w", encoding="utf-8", newline="") as f:
 
 print("CSV généré avec", len(medecins), "médecins.")
 
-#driver.quit()
-#1
+driver.quit()
